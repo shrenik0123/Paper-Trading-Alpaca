@@ -42,14 +42,25 @@ def post_watchlist(watchlist_name, symbols):
     r = requests.post(WATCHLIST_URL, data=json.dumps(data), headers=headers)
     return json.loads(r.text)
 
+def update_watchlist(watchlist_id, symbol):
+    update_url = "{}/{}".format(WATCHLIST_URL, watchlist_id)
+    data = {
+        "symbol": symbol
+    }
+    r = requests.post(update_url, data=json.dumps(data), headers=headers)
+    return json.loads(r.text)
+
 # Order 10 apple shares
 # response = post_order("AAPL", 10, "buy", "market", "gtc")
 # print(json.dumps(response, indent=3))
 
-stocks_to_watch = ["AAPL", "MSFT", "XOM", "PFE"]
-response = post_watchlist("First Watchlist", stocks_to_watch)
-print(json.dumps(response, indent=3))
+stocks_to_watch = ["AAPL", "MSFT", "PFE"]
+# response = post_watchlist("First Watchlist", stocks_to_watch)
+# print(json.dumps(response, indent=3))
 
-response = get_watchlist()
-print(json.dumps(response, indent=3))
+# for watchlist in get_watchlist():
+#     if watchlist["name"] == "Primary Watchlist":
+#         for stock in stocks_to_watch:
+#             response = update_watchlist(watchlist["id"], stock)
+#             print(json.dumps(response, indent=3))
 
